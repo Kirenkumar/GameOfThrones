@@ -1,0 +1,37 @@
+  $('#submitbtn').click(function(e)
+    {
+        e.preventDefault();
+        var answer=$('#answer').val().trim();
+        
+        //window.alert('datax');  
+           $.post("checkanswer.php",{answer:answer},function (datax)
+        {
+                    if(datax.codex=="10")
+            {
+              
+                $.fancybox({
+                    
+                    content :"<div style='width:300px;height:220px'><center><img src='_include/img/right.jpg'/></center></div>"
+                    
+                });
+
+                if(datax.codexskip=="30")
+                {
+                  $('#skipbtn').hide();
+                  localStorage['skipbtn']='off';
+                }
+                loadData();
+                loadData2();
+                window.reload();
+
+            }
+            else if(datax.codex=="20")
+            {
+                $.fancybox({
+                    content:"<div style='width:300px;height:226px'><center><img src='_include/img/wrong.png' height='100%'/></center></div>"
+                });
+            }
+           $('#answer').val('');
+        },"json");
+        
+    });
